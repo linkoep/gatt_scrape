@@ -6,6 +6,10 @@ Scrapes through the [Bluetooth GATT Service XMLs](https://www.bluetooth.com/spec
 	website](https://linuskoepfer.dev/projects/gatt-scraper/)
 ## Usage
 ```
-$ python3 main.py > output_file.md
+main.py [-h] [--outfile OUTFILE] {characteristics,services,all}
+```
+For example:
+```
+$ python3 main.py --outfile gatt-svcs.md services
 ```
 Mismatches between link name and XML name, and rows with no links are printed to stderr.
