@@ -30,12 +30,14 @@ for row in soup.find_all('tr'):
         x_soup = BeautifulSoup(xml.text, 'lxml')
 
         xml_name = x_soup.find('service')['name']
-        #if xml_name != service_name:
-            #print('xml: {}, link: {}'.format(xml_name, service_name))
+        if xml_name != service_name:
+            print('xml: {}, link: {}'.format(xml_name, service_name), file=sys.stderr)
 
+        # Remove newlines, replace bullet points with hyphens.
         description = x_soup.find('informativetext').get_text(' ', strip=True)
-        description = ']'.join(description.splitlines())
+        description = ''.join(description.splitlines())
         description = description.replace('â\x80¢', '-')
+
         mandatory = []
         optional = []
         for characteristic in x_soup.find_all('characteristic'):
@@ -51,8 +53,8 @@ for row in soup.find_all('tr'):
         service['optional'] = optional
         services.append(service)
 
-    # else:
-        # print(row)
+    else:
+        print(row, file=sys.stderr)
 
 # Make markdown table
 print('| Service Name | Description | Mandatory Characteristics | Optional Characteristics')
